@@ -1,0 +1,32 @@
+<html>
+  <head>
+    <title>Корзина</title>
+    <script src="https://js.stripe.com/v3/"></script>
+  </head>
+  <body>
+    <header>
+      <ul>
+        <li><a href="{% url 'item_list' %}">Список товаров</a></li>
+        <li><a href="{% url 'cart' %}">Корзина</a></li>
+      </ul>
+    </header>
+    {% for item in cart %}
+        <div>
+            <p>Название: {{ item.name }}</p>
+            <p>Стоимость: {{ item.total_price}} $</p>
+            <hr>
+        </div>
+    {% endfor %}
+    <h3>Полная стоимость: {{ cart.get_total_price }}</h3>
+    <button id="buy-button">Оплатить</button>
+      <script type="text/javascript">
+        var stripe = Stripe('pk_test_51Rq7HeQsJkNcqq8DyyzC58xeJjAoxBpaweS4HwJk3bIptmfdTbyZPyyAQLkPBfgQu6FzsBkrKJGoybRXS44J6owf00Wxcbtmmx');
+        var buyButton = document.getElementById('buy-button');
+        buyButton.addEventListener('click', function() {
+          fetch('checkout', {method: 'GET'})
+          .then(response => response.json())
+          .then(session => stripe.redirectToCheckout({ sessionId: session.id }))
+        });
+      </script>
+  </body>
+</html>

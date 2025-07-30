@@ -1,0 +1,29 @@
+<html>
+  <head>
+    <title>Список товаров</title>
+  </head>
+  <body>
+    <header>
+      <ul>
+        <li><a href="{% url 'item_list' %}">Список товаров</a></li>
+        <li><a href="{% url 'cart' %}">Корзина</a></li>
+      </ul>
+    </header>
+    {% for item in items %}
+        <div>
+            <h2><a href="{% url 'item_detail' item.id %}">{{ item.name }}</a></h2>
+            <p>{{ item.description }}</p>
+            <p>{{ item.price }} $</p>
+            <button id="add-to-cart">Добавить в корзину</button>
+              <script type="text/javascript">
+                var addToCartButton = document.getElementById('add-to-cart');
+                addToCartButton.addEventListener('click', function() {
+                  fetch('{{ item.id }}/add_to_cart', {method: 'GET'})
+                  .then(response => response.ok)
+                });
+              </script>
+              <hr>
+        </div>
+        {% endfor %}
+  </body>
+</html>
