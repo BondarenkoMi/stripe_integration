@@ -56,4 +56,7 @@ def clear_cart(request):
 
 def get_cart(request):
     cart = Cart(request)
-    return render(request, 'cart.html', {"cart": cart})
+    return render(request, 'cart.html', {
+        "cart": cart,
+        "stripe_public_key": settings.STRIPE_PUBLIC_KEY
+        })

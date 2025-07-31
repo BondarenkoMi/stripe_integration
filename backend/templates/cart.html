@@ -21,7 +21,7 @@
     <h3>Полная стоимость: {{ cart.get_total_price }}</h3>
     <button id="buy-button">Оплатить</button>
       <script type="text/javascript">
-        var stripe = Stripe('pk_test_51Rq7HeQsJkNcqq8DyyzC58xeJjAoxBpaweS4HwJk3bIptmfdTbyZPyyAQLkPBfgQu6FzsBkrKJGoybRXS44J6owf00Wxcbtmmx');
+        var stripe = Stripe('{{ stripe_public_key }}');
         var buyButton = document.getElementById('buy-button');
         buyButton.addEventListener('click', function() {
           fetch('checkout', {method: 'GET'})
