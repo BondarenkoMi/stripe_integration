@@ -9,6 +9,8 @@ from items.models import Item
 def get_cart_stripe_session(request):
     cart = Cart(request)
     stripe.api_key = settings.STRIPE_API_KEY
+    if len(cart.cart):
+        return HttpResponse(status=400)
     line_items = []
     for item in cart:
         line_items.append({
