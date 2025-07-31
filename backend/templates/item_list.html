@@ -14,12 +14,18 @@
             <h2><a href="{% url 'item_detail' item.id %}">{{ item.name }}</a></h2>
             <p>{{ item.description }}</p>
             <p>{{ item.price }} $</p>
-            <button id="add-to-cart">Добавить в корзину</button>
+            <button id="add-to-cart{{ item.id }}">Добавить в корзину</button>
               <script type="text/javascript">
-                var addToCartButton = document.getElementById('add-to-cart');
+                var addToCartButton = document.getElementById('add-to-cart{{ item.id }}');
                 addToCartButton.addEventListener('click', function() {
-                  fetch('{{ item.id }}/add_to_cart', {method: 'GET'})
-                  .then(response => response.ok)
+                  fetch("{% url 'add_to_cart' item.id %}", {method: 'GET'})
+                  .then(response => {
+                    if (response.ok) {
+                      alert('Товар добавлен в корзину')
+                    } else {
+                      alert('Ошибка при добавлении товара')
+                    }
+                  })
                 });
               </script>
               <hr>
